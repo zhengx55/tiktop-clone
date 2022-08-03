@@ -2,7 +2,7 @@ export default {
   name: "comment",
   title: "Comment",
   type: "document",
-  fileds: [
+  fields: [
     { name: "postedBy", title: "Posted By", type: "postedBy" },
     { name: "comment", title: "Commnet", type: "string" },
   ],
