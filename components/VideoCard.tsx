@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { Video } from '../types'
 import { HivolumeUp, HiVolumeOff } from 'react-icons/hi'
 import { BsPlay, BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs'
@@ -12,10 +12,82 @@ interface IProps {
 }
 
 export const VideoCard: NextPage<IProps> = ({ post }) => {
+  const [isHover, setisHover] = useState<boolean>(false)
+  const [playing, setplaying] = useState<boolean>(false)
+  const [muted, setmuted] = useState<boolean>(false)
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
-      <div >
-        <div></div>
+      <div>
+        <div className="flex cursor-pointer gap-3 rounded p-2 font-semibold">
+          <div className="h-10 w-10 md:h-16 md:w-16">
+            <Link href={`/`}>
+              <>
+                <Image
+                  width={62}
+                  height={62}
+                  className="rounded-full"
+                  src={post.postedBy.image}
+                  alt="profit"
+                  layout="responsive"
+                />
+              </>
+            </Link>
+          </div>
+          <div>
+            <Link href={`/`}>
+              <div className="flex items-center gap-2">
+                <p className="md:text-md flex items-center gap-2 font-bold text-primary">
+                  {post.postedBy.userName}{' '}
+                  <GoVerified className="text-md text-blue-400" />
+                </p>
+                <p className="hidden text-xs font-medium capitalize text-gray-500 md:block">
+                  {post.postedBy.userName}
+                </p>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="relative flex gap-4 lg:ml-20">
+        <div
+          className="rounded-3xl"
+          onMouseEnter={() => {
+            setisHover(true)
+          }}
+          onMouseLeave={() => {
+            setisHover(false)
+          }}
+        >
+          <Link href="/">
+            <video
+              src={post.video.asset.url}
+              loop
+              className="lg:w[600px] h-[300px] w-[200px] cursor-pointer bg-gray-100 md:h-[400px] lg:h-[530px]"
+            />
+          </Link>
+          {isHover && (
+            <div>
+              {playing ? (
+                <button>
+                  <BsFillPauseFill className="text-2xl text-black lg:text-4xl" />
+                </button>
+              ) : (
+                <button>
+                  <BsFillPlayFill className="text-2xl text-black lg:text-4xl" />
+                </button>
+              )}
+            </div>
+          )}
+          {muted ? (
+            <button>
+              <HiVolumeOff className="text-2xl text-black lg:text-4xl" />
+            </button>
+          ) : (
+            <button>
+              <HivolumeUp className="text-2xl text-black lg:text-4xl" />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )
