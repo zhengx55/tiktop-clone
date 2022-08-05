@@ -5,6 +5,9 @@ import Link from 'next/link'
 import GoogleLogin from 'react-google-login'
 import { AiFillHome, AiOutlineMenu } from 'react-icons/ai'
 import { ImCancelCircle } from 'react-icons/im'
+import Discover from './Discover'
+import SuggestedAccounts from './SuggestedAccounts'
+import Footer from './Footer'
 
 const Sidebar = () => {
   const [showSideBar, setshowSideBar] = useState(true)
@@ -14,25 +17,25 @@ const Sidebar = () => {
   return (
     <div>
       <div
-        className="block xl:hidden m-2 ml-4 mt-3 text-xl"
+        className="m-2 ml-4 mt-3 block text-xl xl:hidden"
         onClick={() => setshowSideBar((prev) => !prev)}
       >
         {showSideBar ? <ImCancelCircle /> : <AiOutlineMenu />}
       </div>
       {showSideBar && (
-        <div className="xl:w-400 w-20 flex flex-col justify-start mb-10 border-r-2 border-gray-100 xl:border-0 p-3">
-          <div className="xl:border-b-2 border-gray-200 xl:pb-4">
+        <div className="mb-10 flex w-20 flex-col justify-start border-r-2 border-gray-100 p-3 xl:w-400 xl:border-0">
+          <div className="border-gray-200 xl:border-b-2 xl:pb-4">
             <Link href="/">
               <div className={normalLink}>
                 <p className="text-2xl">
                   <AiFillHome />
                 </p>
-                <span className="text-xl hidden xl:block">For you</span>
+                <span className="hidden text-xl xl:block">For you</span>
               </div>
             </Link>
           </div>
           {!userPorfile && (
-            <div className="px-2 py-4 hidden xl:block">
+            <div className="hidden px-2 py-4 xl:block">
               <p className="text-gray-400">
                 login to like your perfered videos
               </p>
@@ -42,7 +45,7 @@ const Sidebar = () => {
                   render={(renderProps) => {
                     return (
                       <button
-                        className="bg-white text-lg text-[#f51997] border-[1px] border-[#f51997] font-semibold px-6 py-3 rounded-md outline-none w-full mt-3 hover:text-white hover:bg-[#F51997] cursor-pointer"
+                        className="mt-3 w-full cursor-pointer rounded-md border-[1px] border-[#f51997] bg-white px-6 py-3 text-lg font-semibold text-[#f51997] outline-none hover:bg-[#F51997] hover:text-white"
                         onClick={renderProps.onClick}
                         disabled={renderProps.disabled}
                       >
@@ -57,6 +60,9 @@ const Sidebar = () => {
               </div>
             </div>
           )}
+          <Discover />
+          <SuggestedAccounts />
+          <Footer />
         </div>
       )}
     </div>
