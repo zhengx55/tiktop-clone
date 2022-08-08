@@ -69,12 +69,12 @@ export const VideoCard: NextPage<IProps> = ({ post }) => {
             setisHover(false)
           }}
         >
-          <Link href="/">
+          <Link href={`/detail/${post._id}`}>
             <video
               ref={videoRef}
               src={post.video.asset.url}
               loop
-              className="h-[300px] w-[200px] cursor-pointer rounded-2xl bg-gray-100 md:h-[400px] lg:h-[528px] lg:w-[600px]"
+              className="h-[300px] w-[200px] cursor-pointer rounded-2xl bg-gray-100 md:h-[400px] lg:h-[528px] lg:w-[700px]"
             />
           </Link>
           {isHover && (
