@@ -1,9 +1,9 @@
 import { NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Video } from '../types'
-import { HivolumeUp, HiVolumeOff } from 'react-icons/hi'
+import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi'
 import { BsPlay, BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs'
 import { GoVerified } from 'react-icons/go'
 
@@ -15,6 +15,17 @@ export const VideoCard: NextPage<IProps> = ({ post }) => {
   const [isHover, setisHover] = useState<boolean>(false)
   const [playing, setplaying] = useState<boolean>(false)
   const [muted, setmuted] = useState<boolean>(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  const onVideoPress = (): void => {
+    if (playing) {
+      videoRef?.current?.pause()
+      setplaying(false)
+    } else {
+      videoRef?.current?.play()
+      setplaying(true)
+    }
+  }
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
       <div>
@@ -60,31 +71,40 @@ export const VideoCard: NextPage<IProps> = ({ post }) => {
         >
           <Link href="/">
             <video
+              ref={videoRef}
               src={post.video.asset.url}
               loop
               className="lg:w[600px] h-[300px] w-[200px] cursor-pointer bg-gray-100 md:h-[400px] lg:h-[530px]"
             />
           </Link>
           {isHover && (
-            <div>
+            <div className="absolute bottom-6 left-8 flex w-[100px] cursor-pointer gap-10 p-3 md:left-14 md:w-[50px] lg:left-0 lg:justify-between">
               {playing ? (
-                <button>
+                <button onClick={onVideoPress}>
                   <BsFillPauseFill className="text-2xl text-black lg:text-4xl" />
                 </button>
               ) : (
-                <button>
+                <button onClick={onVideoPress}>
                   <BsFillPlayFill className="text-2xl text-black lg:text-4xl" />
                 </button>
               )}
             </div>
           )}
           {muted ? (
-            <button>
+            <button
+              onClick={() => {
+                setmuted(false)
+              }}
+            >
               <HiVolumeOff className="text-2xl text-black lg:text-4xl" />
             </button>
           ) : (
-            <button>
-              <HivolumeUp className="text-2xl text-black lg:text-4xl" />
+            <button
+              onClick={() => {
+                setmuted(true)
+              }}
+            >
+              <HiVolumeUp className="text-2xl text-black lg:text-4xl" />
             </button>
           )}
         </div>
