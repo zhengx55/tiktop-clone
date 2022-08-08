@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React, { useRef, useState } from 'react'
 import { Video } from '../types'
 import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi'
-import { BsPlay, BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs'
+import { BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs'
 import { GoVerified } from 'react-icons/go'
 
 interface IProps {
@@ -74,11 +74,11 @@ export const VideoCard: NextPage<IProps> = ({ post }) => {
               ref={videoRef}
               src={post.video.asset.url}
               loop
-              className="lg:w[600px] h-[300px] w-[200px] cursor-pointer bg-gray-100 md:h-[400px] lg:h-[530px]"
+              className="h-[300px] w-[200px] cursor-pointer rounded-2xl bg-gray-100 md:h-[400px] lg:h-[528px] lg:w-[600px]"
             />
           </Link>
           {isHover && (
-            <div className="absolute bottom-6 left-8 flex w-[100px] cursor-pointer gap-10 p-3 md:left-14 md:w-[50px] lg:left-0 lg:justify-between">
+            <div className="absolute bottom-6 left-8 flex w-[100px] cursor-pointer gap-10 p-3 md:left-14 md:w-[50px] lg:left-0 lg:w-[600px] lg:justify-between">
               {playing ? (
                 <button onClick={onVideoPress}>
                   <BsFillPauseFill className="text-2xl text-black lg:text-4xl" />
@@ -88,24 +88,16 @@ export const VideoCard: NextPage<IProps> = ({ post }) => {
                   <BsFillPlayFill className="text-2xl text-black lg:text-4xl" />
                 </button>
               )}
+              {muted ? (
+                <button onClick={() => setmuted(false)}>
+                  <HiVolumeOff className="text-2xl text-black lg:text-4xl" />
+                </button>
+              ) : (
+                <button onClick={() => setmuted(true)}>
+                  <HiVolumeUp className="text-2xl text-black lg:text-4xl" />
+                </button>
+              )}
             </div>
-          )}
-          {muted ? (
-            <button
-              onClick={() => {
-                setmuted(false)
-              }}
-            >
-              <HiVolumeOff className="text-2xl text-black lg:text-4xl" />
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                setmuted(true)
-              }}
-            >
-              <HiVolumeUp className="text-2xl text-black lg:text-4xl" />
-            </button>
           )}
         </div>
       </div>
